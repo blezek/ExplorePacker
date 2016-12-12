@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Install Grafana
+      shell: yum install -y https://grafanarel.s3.amazonaws.com/builds/grafana-2.0.2-1.x86_64.rpm creates=/etc/grafana/grafana.ini
+      notify:
+        - restart grafana
+
+
+  handlers:
+    - name: restart grafana
+      service: name=grafana-server state=restarted enabled=yes
+    
